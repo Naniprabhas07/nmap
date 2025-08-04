@@ -103,5 +103,109 @@ This repository was submitted as part of Task 1 for the Cyber Security Internshi
 
 
 ---
+Based on Nmap scan, the following ports are open on the host 192.168.56.1:
 
-Let me know if you'd like me to create the services_and_risks.md content too, or help structure your GitHub repo before submission!
+Port	Service	Protocol	Description
+
+135	msrpc	TCP	Microsoft RPC
+139	netbios-ssn	TCP	NetBIOS Session Service
+445	microsoft-ds	TCP	Microsoft Directory Services (SMB)
+
+
+Now let’s break down the risks associated with each:
+
+
+---
+
+🔓 Port 135 (msrpc - Microsoft RPC)
+
+🧨 Risk: Remote Exploitation
+
+Used for: Windows Remote Procedure Call (RPC).
+
+Threats:
+
+Can be abused for remote code execution.
+
+Target of worms like Blaster.
+
+Often used in lateral movement in internal networks.
+
+
+Example Exploit: CVE-2003-0352 (Blaster worm used RPC DCOM vulnerability).
+
+
+
+---
+
+🔓 Port 139 (netbios-ssn)
+
+🧨 Risk: Information Leakage & Unauthorized Access
+
+Used for: NetBIOS over TCP/IP, file/printer sharing on Windows.
+
+Threats:
+
+Shares system info (computer name, domain, shared folders).
+
+May allow unauthorized file access.
+
+Man-in-the-Middle (MITM) attacks possible if improperly secured.
+
+
+Exploitable by tools: nbtscan, smbclient, enum.
+
+
+
+---
+
+🔓 Port 445 (microsoft-ds - SMB)
+
+🧨 Risk: High-Profile Vulnerabilities
+
+Used for: File and printer sharing (SMB protocol).
+
+Threats:
+
+Famous for EternalBlue exploit (WannaCry ransomware).
+
+Can allow remote code execution, file access, and propagation of malware.
+
+Often scanned and targeted by attackers for vulnerabilities.
+
+
+Exploitable via: Metasploit, SMB relay attacks, brute-force tools.
+
+
+
+---
+
+🔐 Summary of Risks
+
+Port	Risk Description
+
+135	Remote code execution; RPC-based worm propagation
+139	File share enumeration; MITM attacks
+445	Critical SMB exploits; ransomware entry point
+
+
+
+---
+
+✅ Mitigation Recommendations
+
+🔒 Block unused ports via firewall (especially from external access).
+
+🧱 Use firewalls to restrict access to only trusted IPs.
+
+📦 Disable SMBv1 and legacy NetBIOS if not needed.
+
+🔁 Patch systems regularly to fix known vulnerabilities.
+
+🔍 Monitor logs and traffic for unusual behavior or scanning.
+
+
+
+---
+
+
