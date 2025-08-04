@@ -1,46 +1,38 @@
-# nmap
-This repository contains all the necessary files and documentation for Task 1 of my Cyber Security Internship, which focuses on basic network reconnaissance. The task involved using Nmap to scan the local network for open ports and identifying potential vulnerabilities associated with those ports.
-
-Absolutely! Below is a complete README.md file tailored for your GitHub repository submission for Task 1: Local Network Port Scanning using Nmap — including the commands used, results, risks, and structure.
-
-
----
 
 # 🔐 Cyber Security Internship - Task 1
 
 ## 📌 Task: Scan Your Local Network for Open Ports
 
-This repository contains files and documentation for *Task 1* of the Cyber Security Internship program. The objective is to perform a basic port scanning operation using *Nmap* and analyze open ports to understand network exposure and potential risks.
+This repository contains all the necessary files and documentation for **Task 1** of my Cyber Security Internship, which focuses on basic network reconnaissance. The objective is to use **Nmap** to scan the local network for open ports and identify potential vulnerabilities associated with those ports.
 
 ---
 
-## 🛠 Tools Used
+## 🛠️ Tools Used
 
-- *Nmap* (CLI and Zenmap GUI)
-- *Wireshark* (optional, for packet analysis)
+- **Nmap** (CLI & Zenmap GUI)
+- **Wireshark** *(optional, for packet analysis)*
 
 ---
 
 ## 🧪 Commands Used
 
-### 🔹 1. TCP SYN Scan (Normal Text Output)
+### 1️⃣ TCP SYN Scan (Normal Text Output)
 ```bash
-
 nmap -sS 192.168.56.1/24 -oN nmap_scan_results.txt
 
-🔹 2. XML Output for HTML Conversion (Optional)
+2️⃣ XML Output for HTML Conversion (Optional)
 
 nmap -sS 192.168.56.1/24 -oX scan.xml
 
-🔹 3. Save All Formats at Once
+3️⃣ Save All Formats at Once
 
 nmap -sS 192.168.56.1/24 -oA myscan
 
-🔹 4. Convert XML to HTML (Optional)
+4️⃣ Convert XML to HTML (Optional)
 
 xsltproc scan.xml -o scan.html
 
-> Replace 192.168.56.1/24 with your local network's IP range if different.
+> ⚠️ Replace 192.168.56.1/24 with your actual local IP range.
 
 
 
@@ -52,10 +44,10 @@ xsltproc scan.xml -o scan.html
 File Name	Description
 
 nmap_scan_results.txt	Human-readable Nmap scan output
-services_and_risks.md	List of open ports found and associated risks
-scan.xml (optional)	XML format of scan results
+services_and_risks.md	List of open ports and associated vulnerabilities
+scan.xml (optional)	Nmap results in XML format
 scan.html (optional)	HTML report converted from XML
-README.md	Documentation of task, tools, commands, and results
+README.md	Documentation of the task, commands, and results
 
 
 
@@ -71,122 +63,90 @@ PORT     STATE SERVICE
 
 ---
 
-⚠ Risks Identified from Open Ports
-
-Port	Service	Risk Description
-
-135	msrpc	Remote code execution; exploited by worms like Blaster
-139	netbios-ssn	File/share enumeration; vulnerable to MITM and info leaks
-445	microsoft-ds	SMB exploits like EternalBlue (WannaCry); critical risk
-
-
----
-
-🧠 Key Concepts Covered
-
-Port scanning with Nmap
-
-TCP SYN scan technique
-
-Identifying network devices and services
-
-Recognizing risks from exposed ports
-
-Basic network reconnaissance
-
-
-This repository was submitted as part of Task 1 for the Cyber Security Internship program.
-
-
-> 🔐 Note: All IPs and data are from a private lab environment for learning purposes only.
-
-
-
----
-Based on Nmap scan, the following ports are open on the host 192.168.56.1:
+⚠️ Risks Identified from Open Ports
 
 Port	Service	Protocol	Description
 
-135	msrpc	TCP	Microsoft RPC
+135	msrpc	TCP	Microsoft RPC (Remote Procedure Call)
 139	netbios-ssn	TCP	NetBIOS Session Service
-445	microsoft-ds	TCP	Microsoft Directory Services (SMB)
+445	microsoft-ds	TCP	SMB - Microsoft Directory Services
 
-
-Now let’s break down the risks associated with each:
 
 
 ---
 
-🔓 Port 135 (msrpc - Microsoft RPC)
+🔍 Risk Details
+
+🔓 Port 135 – msrpc
 
 🧨 Risk: Remote Exploitation
 
-Used for: Windows Remote Procedure Call (RPC).
+Used for: Windows Remote Procedure Call (RPC)
 
 Threats:
 
-Can be abused for remote code execution.
+Vulnerable to remote code execution
 
-Target of worms like Blaster.
+Targeted by the Blaster worm
 
-Often used in lateral movement in internal networks.
+Often used for lateral movement within a network
 
 
-Example Exploit: CVE-2003-0352 (Blaster worm used RPC DCOM vulnerability).
+Example Exploit: CVE-2003-0352 (Blaster)
 
 
 
 ---
 
-🔓 Port 139 (netbios-ssn)
+🔓 Port 139 – netbios-ssn
 
 🧨 Risk: Information Leakage & Unauthorized Access
 
-Used for: NetBIOS over TCP/IP, file/printer sharing on Windows.
+Used for: NetBIOS over TCP/IP (File/Printer Sharing)
 
 Threats:
 
-Shares system info (computer name, domain, shared folders).
+Leaks system info (name, shares, domain)
 
-May allow unauthorized file access.
+May allow unauthorized file access
 
-Man-in-the-Middle (MITM) attacks possible if improperly secured.
+Vulnerable to MITM attacks if unsecured
 
 
-Exploitable by tools: nbtscan, smbclient, enum.
+Tools: nbtscan, smbclient, enum
 
 
 
 ---
 
-🔓 Port 445 (microsoft-ds - SMB)
+🔓 Port 445 – microsoft-ds
 
 🧨 Risk: High-Profile Vulnerabilities
 
-Used for: File and printer sharing (SMB protocol).
+Used for: SMB (Server Message Block), File/Printer sharing
 
 Threats:
 
-Famous for EternalBlue exploit (WannaCry ransomware).
+Exploited in WannaCry via EternalBlue
 
-Can allow remote code execution, file access, and propagation of malware.
+Enables remote code execution
 
-Often scanned and targeted by attackers for vulnerabilities.
+Can spread malware within networks
 
 
-Exploitable via: Metasploit, SMB relay attacks, brute-force tools.
+Exploits via: Metasploit, brute-force, SMB relay attacks
 
 
 
 ---
 
-🔐 Summary of Risks
+🔐 Risk Summary Table
 
 Port	Risk Description
 
 135	Remote code execution; RPC-based worm propagation
-139	File share enumeration; MITM attacks
-445	Critical SMB exploits; ransomware entry point
+139	File/share enumeration; MITM attacks
+445	SMB exploits like EternalBlue; ransomware entry point
 
 
 
@@ -194,18 +154,32 @@ Port	Risk Description
 
 ✅ Mitigation Recommendations
 
-🔒 Block unused ports via firewall (especially from external access).
+🔒 Block unused ports via firewall (especially for external traffic)
 
-🧱 Use firewalls to restrict access to only trusted IPs.
+🧱 Restrict port access to trusted internal IPs
 
-📦 Disable SMBv1 and legacy NetBIOS if not needed.
+📦 Disable SMBv1 and legacy NetBIOS services if not needed
 
-🔁 Patch systems regularly to fix known vulnerabilities.
+🔁 Keep systems patched and updated
 
-🔍 Monitor logs and traffic for unusual behavior or scanning.
+🔍 Monitor logs and use IDS/IPS for abnormal port activity
 
 
 
 ---
 
+🧠 Key Concepts Demonstrated
 
+Port scanning with Nmap
+
+TCP SYN scanning
+
+Network host and service discovery
+
+Security risk identification
+
+Basic network reconnaissance
+
+---
+
+> 📝 Disclaimer: All scanning was performed in a safe, local lab environment for educational purposes only. No external networks were targeted
